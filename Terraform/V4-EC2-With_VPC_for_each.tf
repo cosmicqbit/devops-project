@@ -1,18 +1,17 @@
 provider "aws" {
-  region = "us-east-1"
+    region = "ap-south-1"
 }
 
 resource "aws_instance" "demo-server" {
-    ami = "ami-053b0d53c279acc90"
+    ami = "ami-0f5ee92e2d63afc18"
     instance_type = "t2.micro"
-    key_name = "dpp"
-    //security_groups = [ "demo-sg" ]
+    key_name = "terra"
     vpc_security_group_ids = [aws_security_group.demo-sg.id]
     subnet_id = aws_subnet.dpp-public-subnet-01.id 
-for_each = toset(["jenkins-master", "build-slave", "ansible"])
-   tags = {
+    for_each = toset(["jenkins-master", "build-slave", "ansible"])
+    tags = {
      Name = "${each.key}"
-   }
+    }
 }
 
 resource "aws_security_group" "demo-sg" {
@@ -20,34 +19,33 @@ resource "aws_security_group" "demo-sg" {
   description = "SSH Access"
   vpc_id = aws_vpc.dpp-vpc.id 
   
-  ingress {
-    description      = "SHH access"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    ingress {
+        description      = "SHH access"
+        from_port        = 22
+        to_port          = 22
+        protocol         = "tcp"
+        cidr_blocks      = ["0.0.0.0/0"]
     }
 
     ingress {
-    description      = "Jenkins port"
-    from_port        = 8080
-    to_port          = 8080
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+        description      = "Jenkins port"
+        from_port        = 8080
+        to_port          = 8080
+        protocol         = "tcp"
+        cidr_blocks      = ["0.0.0.0/0"]
     }
 
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
+    egress {
+        from_port        = 0
+        to_port          = 0
+        protocol         = "-1"
+        cidr_blocks      = ["0.0.0.0/0"]
+        ipv6_cidr_blocks = ["::/0"]
+    }
 
-  tags = {
-    Name = "ssh-prot"
-
-  }
+    tags = {
+        Name = "ssh-prot"
+    }
 }
 
 resource "aws_vpc" "dpp-vpc" {
@@ -55,14 +53,13 @@ resource "aws_vpc" "dpp-vpc" {
   tags = {
     Name = "dpp-vpc"
   }
-  
 }
 
 resource "aws_subnet" "dpp-public-subnet-01" {
   vpc_id = aws_vpc.dpp-vpc.id
   cidr_block = "10.1.1.0/24"
   map_public_ip_on_launch = "true"
-  availability_zone = "us-east-1a"
+  availability_zone = "ap-south-1a"
   tags = {
     Name = "dpp-public-subent-01"
   }
@@ -72,7 +69,7 @@ resource "aws_subnet" "dpp-public-subnet-02" {
   vpc_id = aws_vpc.dpp-vpc.id
   cidr_block = "10.1.2.0/24"
   map_public_ip_on_launch = "true"
-  availability_zone = "us-east-1b"
+  availability_zone = "ap-south-1b"
   tags = {
     Name = "dpp-public-subent-02"
   }

@@ -10,13 +10,13 @@ Setting up a complete CI/CD pipeline on AWS using a wide range of tools such as 
 
 - [x] Employing Ansible to configure Jenkins master and build nodes.
 
-- [ ] Creating a Jenkins pipeline job.
+- [x] Creating a [Jenkins pipeline](https://github.com/cosmicqbit/tweet-trend) job.
 
-- [ ] Developing a Jenkinsfile from scratch.
+- [x] Developing a Jenkinsfile from scratch.
 
-- [ ] Implementing a multibranch pipeline.
+- [x] Implementing a multibranch pipeline.
 
-- [ ] Enabling webhooks on GitHub for automated triggering of CI/CD processes.
+- [x] Enabling webhooks on GitHub for automated triggering of CI/CD processes.
 
 - [ ] Configuring SonarQube and Sonar scanner.
 

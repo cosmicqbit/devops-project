@@ -1,0 +1,7 @@
+Terraform/.terraform/*
+Terraform/terraform.tfstate.backup
+Terraform/henry.pem
+Terraform/terraform.tfstate
+Terraform/terraform.tfstate.backup
+Terraform/.terraform.lock.hcl
+.vscode

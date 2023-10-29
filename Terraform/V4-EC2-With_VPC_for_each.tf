@@ -3,11 +3,11 @@ provider "aws" {
 }
 
 resource "aws_instance" "demo-server" {
-    ami = "ami-0f5ee92e2d63afc18"
+    ami = "ami-0287a05f0ef0e9d9a"
     instance_type = "t2.micro"
-    key_name = "terra"
+    key_name = "henry"
     vpc_security_group_ids = [aws_security_group.demo-sg.id]
-    subnet_id = aws_subnet.dpp-public-subnet-01.id 
+    subnet_id = aws_subnet.dpp-public-subnet-01.id
     for_each = toset(["jenkins-master", "build-slave", "ansible"])
     tags = {
      Name = "${each.key}"
@@ -17,8 +17,8 @@ resource "aws_instance" "demo-server" {
 resource "aws_security_group" "demo-sg" {
   name        = "demo-sg"
   description = "SSH Access"
-  vpc_id = aws_vpc.dpp-vpc.id 
-  
+  vpc_id = aws_vpc.dpp-vpc.id
+
     ingress {
         description      = "SHH access"
         from_port        = 22
@@ -76,26 +76,26 @@ resource "aws_subnet" "dpp-public-subnet-02" {
 }
 
 resource "aws_internet_gateway" "dpp-igw" {
-  vpc_id = aws_vpc.dpp-vpc.id 
+  vpc_id = aws_vpc.dpp-vpc.id
   tags = {
     Name = "dpp-igw"
-  } 
+  }
 }
 
 resource "aws_route_table" "dpp-public-rt" {
-  vpc_id = aws_vpc.dpp-vpc.id 
+  vpc_id = aws_vpc.dpp-vpc.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.dpp-igw.id 
+    gateway_id = aws_internet_gateway.dpp-igw.id
   }
 }
 
 resource "aws_route_table_association" "dpp-rta-public-subnet-01" {
   subnet_id = aws_subnet.dpp-public-subnet-01.id
-  route_table_id = aws_route_table.dpp-public-rt.id   
+  route_table_id = aws_route_table.dpp-public-rt.id
 }
 
 resource "aws_route_table_association" "dpp-rta-public-subnet-02" {
-  subnet_id = aws_subnet.dpp-public-subnet-02.id 
-  route_table_id = aws_route_table.dpp-public-rt.id   
+  subnet_id = aws_subnet.dpp-public-subnet-02.id
+  route_table_id = aws_route_table.dpp-public-rt.id
 }

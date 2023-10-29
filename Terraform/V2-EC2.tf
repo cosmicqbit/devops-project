@@ -12,7 +12,7 @@ resource "aws_instance" "demo-server" {
 resource "aws_security_group" "demo-sg" {
   name        = "demo-sg"
   description = "SSH Access"
-  
+
   ingress {
     description      = "Shh access"
     from_port        = 22
